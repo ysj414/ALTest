@@ -23,9 +23,9 @@ int main(void)
 				map[j][k]=1;
 		}
 	}
-	for(int i=Ry;i>=0;i--)
+	for(int i=My;i>=0;i--)
 	{
-		for(int j=0;j<=Rx;j++)
+		for(int j=0;j<=Mx;j++)
 		{
 			if(map[i][j] == 1)
 				sum++;
