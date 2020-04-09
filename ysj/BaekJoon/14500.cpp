@@ -80,64 +80,63 @@ void Tsum(int y, int x)
 	int ly=y-1;
 	int Ly=y-2;
 
-    /*  ***
-	     *  */
-	if( My<N && Hx < M)
+
+	// 1
+	if( hy<N && Hx<M)
 	{
 		sum=map[y][x]+map[y][hx]+map[y][Hx]+map[hy][hx];
 		if(sum>Tmax)
 			Tmax=sum;
 	}
-	/* *
-	   **
-	   * */
-
-	if(Hy<N && hx<M)
-	{
-		sum=map[y][x]+map[hy][x]+map[hy][hx]+map[Hy][x];
-		if(sum>Tmax)
-			Tmax=sum;
-	}
-	/*  
-	*/
-        	   
-	if( Hx<M && ly >=0)
-	{
-		sum=map[y][x]+map[y][hx]+map[y][Hx]+map[ly][lx];
-		if(sum>Tmax)
-			Tmax=sum;
-	}
-	if(Ly >=0 && hx < M)
+    //2
+    if(ly>=0 && Hx<M)
+    {
+        sum=map[y][x]+map[y][hx]+map[y][Hx]+map[ly][hx];
+        if(sum>Tmax)
+            Tmax=sum;
+    }
+	//3
+	if(Ly>=0 && hx < M)
 	{
 		sum=map[y][x]+map[ly][x]+map[Ly][x]+map[ly][hx];
 		if(sum>Tmax)
 			Tmax=sum;
 	}
-	if(Ly >=0 && lx >=0)
+	//4
+	if(Ly>=0 && lx >=0)
 	{
-		sum=map[y][x]+map[ly][x]+map[Hy][x]+map[ly][lx];
+		sum=map[y][x]+map[ly][x]+map[Ly][x]+map[ly][lx];
 		if(sum>Tmax)
 			Tmax=sum;
 	}
-
+	//5
  	if(hy<N && Lx>=0)
 	{
 		sum=map[y][x]+map[y][lx]+map[y][Lx]+map[hy][lx];
 		if(sum>Tmax)
 			Tmax=sum;
 	}
-	if(ly>=0 && Hx<M)
-	{
-		sum=map[y][x]+map[y][hx]+map[y][Hx]+map[ly][hx];
-		if(sum>Tmax)
-			Tmax=sum;
-	}
+    //6
+    if(ly >=0 && Lx>=0)
+    {
+        sum=map[y][x]+map[y][lx]+map[y][Lx]+map[ly][lx];
+        if(sum>Tmax)
+            Tmax=sum;
+    }
+	//7
 	if(Hy<N && lx>=0)
 	{
 		sum=map[y][x]+map[hy][x]+map[Hy][x]+map[hy][lx];
 		if(sum>Tmax)
 			Tmax=sum;
 	}
+    //8
+    if(Hy<N && hx<M)
+    {
+        sum=map[y][x]+map[hy][x]+map[hy][hx]+map[Hy][x];
+        if(sum>Tmax)
+            Tmax=sum;
+    }
 
 }
 
