@@ -20,8 +20,9 @@ int main(void)
 
 
 	for(int i=0; i<N;i++)
-		for(int j=0; j<M;j++)
-			cin>>map[i][j];		
+	    for(int j=0; j<M;j++)
+		cin>>map[i][j];
+
 
 	int y1,y2,y3,x1,x2,x3;
 
@@ -37,29 +38,29 @@ int main(void)
 		{
 			y3=k/M;
 			x3=k%M;	
-					cout<<y1<<","<<x1<<" "<<y2<<","<<x2<<" "<<y3<<","<<x3<<"\n";
-					if(map[y1][x1] == 0 && map[y2][x2] == 0 && map[y3][x3] == 0)
+			if(map[y1][x1] == 0 && map[y2][x2] == 0 && map[y3][x3] == 0)
+			{
+				map[y1][x1]=1;
+				map[y2][x2]=1;
+				map[y3][x3]=1;
+				for(int n=0; n<N;n++)
+				{
+					for(int m=0; m<M;m++)
 					{
-//						cout<<y1<<","<<x1<<" "<<y2<<","<<x2<<" "<<y3<<","<<x3<<"\n";
-						map[y1][x1]=1;
-						map[y2][x2]=1;
-						map[y3][x3]=1;
-						for(int n=0; n<N;n++)
-						{
-							for(int m=0; m<M;m++)
-							{
-								if(map[n][m]==2)
-									q.push({n,m});
-							}
-						}
-						BFS();
-						memset(visit,0,sizeof(visit));
-						map[y1][x1]=0;
-						map[y2][x2]=0;
-						map[y3][x3]=0;
+						if(map[n][m]==2)
+							q.push({n,m});
+						else if(map[n][m]==1)
+							visit[n][m]= 1;
 					}
+				}
+				BFS();
+				memset(visit,0,sizeof(visit));
+				map[y1][x1]=0;
+				map[y2][x2]=0;
+				map[y3][x3]=0;
+			}
 		}
-	  }			
+	   }			
 	}		
 		
 	
@@ -81,9 +82,6 @@ void BFS(void)
 		y=q.front().first;
 		x=q.front().second;
 		visit[y][x]=true;
-		
-		if(map[y][x] == 1)
-			visit[y][x] == true;
 		q.pop();
 		
 		for(int i=0;i<4;i++)
@@ -97,21 +95,17 @@ void BFS(void)
 			{
 				q.push({ty,tx});
 			}
-//			if(map[ty][tx] == 1)
-//				visit[ty][tx]=true;
 		}
 
 	}
 	for(int i=0;i<N;i++)
 	{
 		for(int j=0;j<M;j++)
-		{	cout<<visit[i][j];
+		{	
 			if(visit[i][j] == 0)
 				temp_area++;
 		}
-		cout<<"\n";
 	}
-	cout<<"\n";
 
 	if(temp_area>max_area)
 		max_area=temp_area;
