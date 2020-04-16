@@ -14,7 +14,6 @@ int size =0;
 
 int main(void)
 {
-	int N,M;
 	int y,x;
 	cin>>N>>M;
 	cin>>y>>x>>dir;
@@ -40,11 +39,12 @@ void BFS(void)
 		int y=q.front().first;
 		int x=q.front().second;
 		visit[y][x]=true;
+		q.pop();
 		size++;
-
+	 int t_dir=dir;
 	 for(int i=0; i < 4; i++)
 	 {
-		int t_dir=(dir+3)%4;
+		t_dir=(t_dir+3)%4;
 
 		int ty=y + dy[t_dir];
 		int tx=x + dx[t_dir];
@@ -70,15 +70,22 @@ void BFS(void)
 
 		if(ty == -1 || ty == N || tx == -1 || tx == M)  
 			break;
-		if(map[ty][tx] == 0 && visit[ty][tx] == 0)
+
+		if(map[ty][tx] == 1)
+			break;	
+		else
 		{
 		  q.push({ty,tx});
+		  size--;
 		  cnt=0;
 		}		
-		else
-			break;
 	 }
-
 	}
-
+   
+   for(int k=0; k<N; k++)
+   {
+	   for(int p=0; p<M;p++)
+	       cout<<visit[k][p]<<" ";
+	   cout<<"\n";
+   }
 }
