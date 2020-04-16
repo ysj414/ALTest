@@ -1,4 +1,3 @@
-
 #include<iostream>
 #include<queue>
 
@@ -8,12 +7,10 @@ int map[100][100]={0,};
 int N=0;
 int K=0;
 int L=0;
-int time[100];
-char rot[100];
 
-int dy[4]={-1,1,0,0};
-int dx[4]={0,0,-1,1};
-
+int dy[4]={0,1,0,-1};
+int dx[4]={1,0,-1,0};
+pair <int, char> dir_change[100];
 int main(void)
 {
 	cin>>N;
@@ -24,61 +21,61 @@ int main(void)
 		cin>>n>>m;
 		map[n-1][m-1]=1;
 	}
-	int head_y,head_x;
-	head_y=0;
-	head_x=0;
-	map[head_y][head_x]=3;
-	int tail_y,tail_x;
-	tail_y=0;
-	tail_x=0;
-
-	map[0][0]=3;
+	queue<pair<int,int>> snake;
+	pair<int,int> head={0,0};
+	snake.push(head);
 
 	cin>>L;
 	for(int i=0;i<L;i++)
-		cin>>time[i]>>rot[i];
+		cin>>dir_change[i].first>>dir_change[i].second;
 
 	int current_time=0;
 	int temp_L=0;
 	/* initial rotation direction */
-	int move_y=0;
-	int move_x=1;
+	int dir=0;
 	while(1)
 	{
-	  /* rotate by input data */	
-          if(temp_L<=L)
-	  {		 
-	    if(current_time == time[temp_L])
-	    {
-
-		
-	      temp_L++;
-	    }
-
-	    
+	  current_time++;
+	  int move_y = head.first  + dy[dir];
+	  int move_x = head.second + dx[dir];
+	  /* move snake */ 
+	  if(move_y == -1 || move_y == N || move_x == -1 || move_x == N)
+		  break;
+	  else if(map[move_y][move_x] == -1)
+		  break;
+	  else if(map[move_y][move_x] != 1)
+	  {
+		  pair<int,int> tail=snake.front();
+//		  cout<<"(i,j)"<<tail.first<<tail.second<<"\n";
+		  snake.pop();
+		  map[tail.first][tail.second]=0;
 	  }
-	 /* move snake */
-	 map[head_y][head_x]--;
-	 head_y+=move_y;
-	 head_x+=move_x;
-	 if(head_y == -1 || head_y == N || head_x == -1 || head_x == N)
-		 break;
-	 if(map[head_y][head_x] == 1)
-		 map[head_y][head_x]=3;
-	 else if(map[head_y][head_x] >=2)
-		 break;
-	 else if(map[head_y][head_x] == 0)
-	 {
+	  head= {move_y,move_x};
+	  snake.push(head);
+	  map[move_y][move_x]= -1;
+	  
+	  /* rotate by input data */	
+//	  cout<<temp_L<<" "<<"current_time"<<current_time<<" "<<dir_change[temp_L].first<<" "<<dir_change[temp_L].second<<"\n";
+      if(temp_L<L)
+	  {		 
+	    if(current_time == dir_change[temp_L].first )
+	    {
+		  if(dir_change[temp_L].second =='L')
+		  {
+			dir=(dir+3)%4;
+		  }
+		  else
+		  {
+			dir=(dir+1)%4; 
+		  }
 
-	 }	 
+	      temp_L++;		  
+	    }	    
+	  }
 
-
-		
-
-	   current_time++;
 	}
 	
-	
+  cout<<current_time<<"\n";	
 
 	return 0;
 }
