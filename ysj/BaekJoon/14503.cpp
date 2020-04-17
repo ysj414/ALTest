@@ -45,7 +45,6 @@ void BFS(void)
 	 for(int i=0; i < 4; i++)
 	 {
 		t_dir=(t_dir+3)%4;
-
 		int ty=y + dy[t_dir];
 		int tx=x + dx[t_dir];
 		if(ty == -1 || ty == N || tx == -1 || tx == M)
@@ -60,6 +59,8 @@ void BFS(void)
 			cnt=0;
 			break;
 		}
+		else
+			cnt++;
 	 }
 	 if(cnt == 4)
 	 {
@@ -81,11 +82,4 @@ void BFS(void)
 		}		
 	 }
 	}
-   
-   for(int k=0; k<N; k++)
-   {
-	   for(int p=0; p<M;p++)
-	       cout<<visit[k][p]<<" ";
-	   cout<<"\n";
-   }
 }
