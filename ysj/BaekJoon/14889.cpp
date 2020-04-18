@@ -42,36 +42,48 @@ int main(void)
 		    else
 			  team2.push_back(vec[i]);
 	    }
-	    
+/*	    
 	    vector<int> score;
 	    score.push_back(-1);
-	    score.push_back(-1);
+//	    if(N/2 == 2)
+//		 score.push_back(-2);
+//	    else
+	    	 score.push_back(-1);
+
 	    for(int i=0;i<(N/2-2);i++)
 		    score.push_back(i);
+
 	    sort(score.begin(),score.end());
-	   int cnt=0;
+	
+	   vector<int> idx;
 	    do
 	    {
 	      for(int i=0; i<N/2;i++)
 	      {
-	        if(score[i] == -1)
-		{
-		  for(int j=0; j<N/2;j++)
-		  {
-			  if(i == j)
-		             continue;
-			  if(score[j] == -1)
-			score1+=matrix[team1[i]][team1[j]];
-			score2+=matrix[team2[i]][team2[j]];
-	//		cout<<"mat team1("<<team1[i]<<","<<team1[j]<<")="<<matrix[team1[i]][team1[j]]<<"\n";
-//			cout<<"mat team2("<<team2[i]<<","<<team2[j]<<")="<<matrix[team2[i]][team2[j]]<<"\n";
-			
-		  }
-		}
+	        if(score[i] <= -1)
+	          idx.push_back(i);
+		
 	      }
-	    cnt++;
+	       score1+=matrix[team1[idx[0]]][team1[idx[1]]];
+	       score2+=matrix[team2[idx[0]]][team2[idx[1]]];
+	       cout<<"i,j"<<team1[idx[0]]<<","<<team1[idx[1]]<<"score:"<<matrix[team1[idx[0]]][team1[idx[1]]]<<"\n";
+	       for(int k=0;k<N/2;k++)
+		       cout<<score[k]<<" ";
+	       cout<<"\n";
 	    }while(next_permutation(score.begin(),score.end()));
-	    cout<<"cnt:"<<cnt<<"\n";
+*/
+
+	   for(int i=0; i<N/2;i++)
+	   {
+		   for(int j=0; j<N/2;j++)
+		   {
+			   if(i==j)
+			     continue;
+		      score1+=matrix[team1[i]][team1[j]];
+		      score2+=matrix[team2[i]][team2[j]];
+		   }
+	   }
+
 	    int diff;
             if(score1>=score2)
 	    	diff=score1-score2;
