@@ -7,7 +7,7 @@ char board[10][10];
 int dy[4]={-1,1,0,0};
 int dx[4]={0,0,-1,1};
 int N,M;
-int cnt=0;
+int cnt=99999;
 void DFS(int ry,int rx, int by, int bx, int step);
 
 int main(void)
@@ -19,18 +19,18 @@ int main(void)
 	   for(int j=0;j<M;j++)
 	   {
 	        cin>>board[i][j];
-		if(board[i][j]='R')
+		if(board[i][j]=='R')
 		{
 			y1=i;
 			x1=j;
 		}
-		if(board[i][j]='L')
+		if(board[i][j]=='B')
 		{
 			y2=i;
 			x2=j;
 		}
 	   }
-
+	cout<<y1<<x1<<y2<<x2<<"\n";
 	DFS(y1,x1,y2,x2,0);
 	cout<<cnt<<"\n";
 
@@ -41,7 +41,6 @@ void DFS(int ry,int rx,int by,int bx, int step)
 {
      if(step == 11)
      {
-	     cnt=-1;
 	     return;
      }	     
      
@@ -51,51 +50,79 @@ void DFS(int ry,int rx,int by,int bx, int step)
 	int nrx= rx+dx[i];
 	int nby= by+dy[i];
 	int nbx= bx+dx[i];
-	char pos;
 
-	/*modeling for movement of bid*/
 
-	while(board[nby][nbx]!='#')
+
+	cout<<"before loop:"<<ry<<rx<<by<<bx<<"\n";
+	cout<<"step:"<<cnt<<"\n";
+	if(board[nby][nbx]=='#')
+	{
+		nby=by;
+		nbx=bx;
+	}
+	else
+	{
+	while(1)
 	{
 		if(board[nby][nbx] =='O')
 			return;
 		else if(board[nby][nbx] =='R')
 			break;
-
+		else if(board[nby][nbx] =='#')
+		{
+			nby=nby-dy[i];
+			nby=nby-dx[i];
+			break;
+		}
 		nby=nby+dy[i];
 		nbx=nbx+dx[i];
 	}
-	while(board[nry][nrx]!='#')
+	}
+	if(board[nry][nrx]=='#')
+	{
+		nry=ry;
+		nrx=rx;
+	}
+        else
+	{	
+	while(1)
 	{
 		if(board[nry][nrx] =='O')
 		{
-			cnt=step;
+			if(step<cnt)
+			   cnt=step;
 			return;
 		}
 		else if(board[nry][nrx] =='B')
 			break;
+		else if(board[nry][nrx] =='#')
+		{
+			nry=nry-dy[i];
+			nrx=nrx-dx[i];
+			break;
+		}
 		nry=nry+dy[i];
 		nrx=nrx+dx[i];
 	}
+	}
+	if(nry==ry && nrx==rx && nby==by && nbx ==bx)
+		continue;
+
+	cout<<"after loop:"<<nry<<nrx<<nby<<nbx<<"\n";
 	
 	/*go to next postion of bid*/
-	pos=board[ry][rx];
-	board[ry][rx]=board[nry][nrx];
-	board[nry][nrx]=pos;
+	board[ry][rx]='.';
+	board[nry][nrx]='R';
 
-	pos=board[by][bx];
-	board[by][bx]=board[nby][nbx];
-	board[nby][nbx]=pos;
-
+	board[by][bx]='.';
+	board[nby][nbx]='B';
 	DFS(nry,nrx,nby,nbx,step+1);
+	board[ry][rx]='.';
+	board[nry][nrx]='R';
 
-	pos=board[ry][rx];
-	board[ry][rx]=board[nry][nrx];
-	board[nry][nrx]=pos;
-
-	pos=board[by][bx];
-	board[by][bx]=board[nby][nbx];
-	board[nby][nbx]=pos;
+	board[by][bx]='.';
+	board[nby][nbx]='B';
+	
      }
 
 }
