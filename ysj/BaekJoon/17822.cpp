@@ -67,9 +67,7 @@ void rotate(int cir, int dir, int times)
 	    {
 		int temp=circle[cir][1];	    
 		for(int i=1;i<=M-1;i++)
-	        {
 		  circle[cir][i]=circle[cir][i+1];
-		}
 		circle[cir][M]=temp;
 		rotate(cir,dir,times-1);
 	    }
@@ -77,9 +75,8 @@ void rotate(int cir, int dir, int times)
 	    {
 		int temp=circle[cir][M];
 		for(int i=M;i>=2;i--)
-		{
 		  circle[cir][i]=circle[cir][i-1];
-		}	
+			
 		circle[cir][1]=temp;
 		rotate(cir,dir,times-1);
 	    }
@@ -88,278 +85,58 @@ void rotate(int cir, int dir, int times)
 void removenum(int cir)
 {
 	int isremoved=0;
-	
-     for(cir=1;cir<=N;cir++)
-     {	     
-	if(cir == 1)
-	{
-	  for(int i=2; i<=M-1;i++)
-	  {
-		  int cur=circle[cir][i];
-		  if(cur==0)
-			continue;
-		  if(circle[cir][i-1] == cur)
-		  {
-			  delnum[cir][i-1]=true;
-			  delnum[cir][i]=true;
-			  isremoved++;
-		  }
-		  else if(circle[cir][i+1] ==cur)
-		  {
-			  delnum[cir][i+1]=true;
-			  delnum[cir][i]=true;
-			  isremoved++;
-		  }
-		  else if(circle[cir+1][i] == cur)
-		  {
-			  delnum[cir+1][i]=true;
-			  delnum[cir][i]=true;
-			  isremoved++;
-		  }
-	  }
-	  //first 
-	  int cur=circle[cir][1];
-	  if(cur!=0)
-	  {
-	  if(cur == circle[cir][2])
-	  {
-		  delnum[cir][2]=true;
-		  delnum[cir][1]=true;
-		  isremoved++;
-	  }
-	  else if(cur == circle[cir+1][1])
-	  {
-		  delnum[cir+1][1]=true;
-		  delnum[cir][1]=true;
-		  isremoved++;
-	  }
-	  else if(cur == circle[cir][M])
-	  {
-		  delnum[cir][M]=true;
-		  delnum[cir][1]=true;
-		  isremoved++;
-	  }
-	  }
-	  //last
-	  cur = circle[cir][M];
-	  if(cur!=0)
-	  {
-	  if(cur == circle[cir][M-1])
-	  {
-		  delnum[cir][M-1]=true;
-		  delnum[cir][M]=true;
-		  isremoved++;
-	  }
-	  else if(cur == circle[cir+1][M])
-	  {
-		  delnum[cir+1][M]=true;
-		  delnum[cir][M]=true;
-		  isremoved++;
-	  }
-	  }
-	}
-	else if(cir == N)
-	{
-	  for(int i=2; i<=M-1;i++)
-	  {
-		  int cur=circle[cir][i];
-		  if(cur==0)
-			continue;
-		  if(circle[cir][i-1] == cur)
-		  {
-			  delnum[cir][i-1]=true;
-			  delnum[cir][i]=true;
-			  isremoved++;
-		  }
-		  else if(circle[cir][i+1] ==cur)
-		  {
-			  delnum[cir][i+1]=true;
-			  delnum[cir][i]=true;
-			  isremoved++;
-		  }
-		  else if(circle[cir-1][i] == cur)
-		  {
-			  delnum[cir-1][i]=true;
-			  delnum[cir][i]=true;
-			  isremoved++;
-		  }
-	  }
-	
-	  //first 
-	  int cur=circle[cir][1];
-	  if(cur!=0)
-	  {
-	  if(cur == circle[cir][2])
-	  {
-		  delnum[cir][2]=true;
-		  delnum[cir][1]=true;
-		  isremoved++;
-	  }
-	  else if(cur == circle[cir-1][1])
-	  {
-		  delnum[cir-1][1]=true;
-		  delnum[cir][1]=true;
-		  isremoved++;
-	  }
-	  else if(cur == circle[cir][M])
-	  {
-		  delnum[cir][M]=true;
-		  delnum[cir][1]=true;
-		  isremoved++;
-	  }
-	  }
-	  //last
-	  cur = circle[cir][M];
-	  if(cur!=0)
-	  {
-	  if(cur == circle[cir][M-1])
-	  {
-		  delnum[cir][M-1]=true;
-		  delnum[cir][M]=true;
-		  isremoved++;
-	  }
-	  else if(cur == circle[cir-1][M])
-	  {
-		  delnum[cir-1][M]=true;
-		  delnum[cir][M]=true;
-		  isremoved++;
-	  }
-	  }
-	
-	}
-	else
-	{
+	int dy[4]={-1,1,0,0};
+	int dx[4]={0,0,-1,1};
 
-		for(int i=2;i<=M-1;i++)
+	for(int i=1;i<=N;i++)
+	{
+		
+		for(int j=1;j<=M;j++)
 		{
-			  int cur=circle[cir][i];
-			  if(cur==0)
-			      continue;
-		  if(circle[cir][i-1] == cur)
-		  {
-			  delnum[cir][i-1]=true;
-			  delnum[cir][i]=true;
-			  isremoved++;
-		  }
-		  else if(circle[cir][i+1] ==cur)
-		  {
-			  delnum[cir][i+1]=true;
-			  delnum[cir][i]=true;
-			  isremoved++;
-		  }
-		  else if(circle[cir-1][i] == cur)
-		  {
-			  delnum[cir-1][i]=true;
-			  delnum[cir][i]=true;
-			  isremoved++;
-		  }
-		  else if(circle[cir+1][i] == cur)
-		  {
-			  delnum[cir+1][i] == true;
-			  delnum[cir][i]=true;
-			  isremoved++;
-		  }
+			
+			int cur=circle[i][j];
+			if(cur == 0)
+				continue;
+			if(j == 1)
+			{
+				if(circle[i][j] == circle[i][M])
+				{
+					delnum[i][j]=1;
+					delnum[i][M]=1;
+				}
+			}
+
+			for(int k=0;k<4;k++)
+			{
+				int ty=i+dy[k];
+				int tx=j+dx[k];
+				if(ty == 0 || ty == (N+1) || tx == 0 || tx ==(M+1))
+					continue;
+
+				if(circle[ty][tx]==cur)
+				{
+					delnum[ty][tx]==1;
+					delnum[i][j]=1;
+				}
+			}
 		}
-          //first 
-	  int cur=circle[cir][1];
-	  if(cur!=0)
-	  {
-	  if(cur == circle[cir][2])
-	  {
-		  delnum[cir][2]=true;
-		  delnum[cir][1]=true;
-		  isremoved++;
-	  }
-	  else if(cur == circle[cir-1][1])
-	  {
-		  delnum[cir-1][1]=true;
-		  delnum[cir][1]=true;
-		  isremoved++;
-	  }
-	  else if(cur == circle[cir+1][1])
-	  {
-		  delnum[cir+1][1]=true;
-		  delnum[cir][1]=true;
-		  isremoved++;
-	  }
-	  else if(cur == circle[cir][M])
-	  {
-		  delnum[cir][1]=true;
-		  delnum[cir][M]=true;
-		  isremoved++;
-	  }
-	  }
-	  //last
-	  cur = circle[cir][M];
-	  if(cur!=0)
-	  {
-	  if(cur == circle[cir][M-1])
-	  {
-		  delnum[cir][M-1]=true;
-		  delnum[cir][M]=true;
-		  isremoved++;
-	  }
-	  else if(cur == circle[cir-1][M])
-	  {
-		  delnum[cir-1][M]=true;
-		  delnum[cir][M]=true;
-		  isremoved++;
-	  }
-	  else if(cur == circle[cir+1][M])
-	  {
-		  delnum[cir+1][M]=true;
-		  delnum[cir][M]=true;
-		  isremoved++;
-	  }
-	  }
 	}
-     } 
+	
 
-   // cout<<"flag:"<<isremoved<<"\n";
-    for(cir=1;cir<=N;cir++)
-    {
-      if(isremoved>=1)
-      {
-     
-       if(cir==1)
-       {
-	for(int j=0;j<=1;j++)
-	{	
-	for(int i=1;i<=M;i++)
+  //  cout<<"flag:"<<isremoved<<"\n";
+ 	for(int i=1;i<=N;i++)
 	{
-		if(delnum[cir+j][i]==1)
-			circle[cir+j][i]=0;	
+		
+		for(int j=1;j<=M;j++)
+		{
+		   if(delnum[i][j]== 1)
+		   {
+		   	   circle[i][j]=0;	  
+			   isremoved++; 
+		   }
+		}
 	}
-	}
-
-       }
-       else if(cir == N)
-       {
-		for(int j=-1;j<=0;j++)
-	{	
-	for(int i=1;i<=M;i++)
-	{
-		if(delnum[cir+j][i]==1)
-			circle[cir+j][i]=0;	
-	}
-	}
-       
-       }
-       else
-       {
-
-	for(int j=-1;j<=1;j++)
-	{	
-	for(int i=1;i<=M;i++)
-	{
-		if(delnum[cir+j][i]==1)
-			circle[cir+j][i]=0;	
-	}
-	}
-       }
-      }
-    }
-      
+	     
       if(isremoved==0)
       {
 	 float avg=0;
