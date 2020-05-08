@@ -18,12 +18,13 @@ vector<int> pr;
 int N,M,K;
 
 int mkpair(int step);
-int BFS(void);
+void BFS(void);
 void print(void);
 int main(void)
 {
 	K=0;
 	cin>>N>>M;
+	int no_space=0;
 	for(int i=0; i<N;i++)
 	{
 		for(int j=0;j<N;j++)
@@ -35,14 +36,23 @@ int main(void)
 				vir[K].second=j;
 				K++;
 			}
+			else if(map[i][j]==0)
+				no_space++;
 		}
 	}
+	if(no_space==0)
+	{
+		cout<<0<<"\n";
+		return 0;
+	}
+	else
+	{
 	int result=mkpair(1);
-	if(result>99999)
+	if(result>=99999)
 	   cout<<-1<<"\n";
 	else
 	   cout<<result<<"\n";
-
+	}
 	return 0;
 }
 
@@ -57,25 +67,46 @@ int mkpair(int step)
 	sort(pr.begin(),pr.end());
 	
 	do{
-             for(int i=0;i<K;i++)
+         for(int i=0;i<K;i++)
 	     {
 		     if(pr[i]==true)
 			     q.push({vir[i].first,vir[i].second});
+			 else
+				 map[vir[i].first][vir[i].second]=0;
 	     }
-	     int tmp=BFS();
-//	     print();
-	     memset(visit,0,sizeof(visit));
+	BFS();
+		 for(int i=0;i<K;i++)
+		 {
+			 if(pr[i]==false)
+				 map[vir[i].first][vir[i].second]=2;
+		 }
+//print();
+    int local_max=-1;
+    for(int i=0;i<N;i++)
+    {
+	    for(int j=0;j<N;j++)
+	    {
+		    if(map[i][j]==0 && visit[i][j]==0)
+			{
+			    local_max=99999;
+				break;
+			}
+		    if(map[i][j]==0 && visit[i][j]>local_max)
+		    {
+			    local_max=visit[i][j];
+		    }
+	    }
+    }
+	if(local_max<res)
+		res=local_max;
 
-	     if(tmp<res)
-		   res=tmp;
-			
+	memset(visit,0,sizeof(visit));
 	}while(next_permutation(pr.begin(),pr.end()));
    return res;
 }
 
-int BFS(void)
+void BFS(void)
 {
-	int local_max=-1;
 	while(!q.empty())
 	{  int y,x;
 	   y=q.front().first;
@@ -88,33 +119,13 @@ int BFS(void)
 	     tx=x+dx[i];
 	     if(ty==-1 || ty == N || tx == -1 |tx == N)
 	     	continue;
-	     if(map[ty][tx]!=1 && visit[ty][tx]==0)
+	     if(map[ty][tx]==0 && visit[ty][tx]==0)
 	     {
 	     	visit[ty][tx]=visit[y][x]+1;
 		q.push({ty,tx});
 	     }
 	   }
 	}
-
-int no_space=0;
-    for(int i=0;i<N;i++)
-    {
-	    for(int j=0;j<N;j++)
-	    {
-		    if(map[i][j]==0 && visit[i][j]==0)
-			    return 999999;
-		    if(map[i][j]==0 && visit[i][j]>local_max)
-		    {
-			    local_max=visit[i][j];
-			    no_space++;
-		    }
-	    }
-    }
- //   print(); 
-    if(no_space==0)
-	return 0;
-    else 
-    	return local_max;
 }
 
 
