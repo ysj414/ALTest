@@ -1,8 +1,11 @@
 #include<iostream>
-
+#define PIXEL	8
 using namespace std;
 
 char map[52][52];
+
+char Wfirst[9][9]={"WBWBWBWB","WBWBWBWB","WBWBWBWB","WBWBWBWB","WBWBWBWB","WBWBWBWB","WBWBWBWB","WBWBWBWB"};
+char Bfirst[9][9]={"BWBWBWBW","BWBWBWBW","BWBWBWBW","BWBWBWBW","BWBWBWBW","BWBWBWBW","BWBWBWBW","BWBWBWBW"};
 int N,M;
 int main(void)
 {
@@ -14,74 +17,37 @@ int main(void)
 	}
 
 	int MIN=999999;
+	
+	int NewN=N-PIXEL;
+	int NewM=M-PIXEL;
 
-	for(int i=0;i<N;i++)
+	for(int i=0; i<NewN; i++)
 	{
-		
-		if(i+8>N)
-			break;
-
-		for(int j=0;j<M;j++)
+		int TEMP_WMIN=0,TEMP_BMIN=0;
+		for(int j=0; j<NewM; j++)
 		{
-			if(j+8>M)
-				break;
-			int cnt=0;
-			for(int k=i;k<i+8;k++)
+			for(int k=i; k<i+PIXEL; k++)
 			{
-
-				char current=map[k][j];
-				for(int m=j+1;m<j+8;m++)
+				for(int m=j; m<j+PIXEL; m++)
 				{
-					if(current == map[k][m])
-					{
-					   cnt++;
-					   if(current=='W')
-						   current='B';
-					   else
-						   current='W';
-					}
-					else
-						current = map[k][m];
+					if(map[k][m] != Wfirst[k-i][m-j])
+						TEMP_WMIN++;
+					if(map[k][m] != Bfirst[k-i][m-j])
+						TEMP_BMIN++;
+				}
+				
+				if(TEMP_WMIN < TEMP_BMIN)
+				{
+					if(TEMP_WMIN > MIN)
+						MIN=TEMP_WMIN;
+				}
+				else
+				{
+					if(TEMP_BMIN > MIN)
+						MIN=TEMP_BMIN;
 				}
 			}
-
-			if(cnt<MIN)
-				MIN=cnt;
 		}
-	}
-
-
-	for(int i=N-1;i>=0;i--)
-	{
-		if(i-8<-1)
-			break;
-		int cnt=0;
-		for(int j=M-1;j>=0;j--)
-		{
-			if(j-8<-1)
-				break;
-			int cnt=0;
-			for(int k=i;k>i-8;k--)
-			{
-				char current=map[k][j];
-				for(int m=j-1;m>j-8;m--)
-				{
-					if(current == map[k][m])
-					{
-						cnt++;
-						if(current=='W')
-							current=='B';
-						else
-							current='W';
-					}
-					else
-						current=map[k][m];
-					}
-				}
-
-			   if(cnt<MIN)
-				   MIN=cnt;
-		 }
 	}
 
 	cout<<MIN<<"\n";
