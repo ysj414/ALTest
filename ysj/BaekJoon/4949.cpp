@@ -11,10 +11,21 @@ int main(void)
 	{
 		char buf[101];
 		memset(buf,0,sizeof(buf));
-		fgets(buf,100,stdin);
 		stack<char> st;
+
+
+/*	 문제가 되는 부분	
+		scanf("%c", &buf[0]);
 		if(buf[0] == '.')
 			break;
+		for(int i = 1 ; i< 100; i++)
+		{
+			scanf("%c",&buf[i]);
+			if(buf[i] == '.')
+					break;
+		}
+*/
+
 		int len = strlen(buf);
 		int flag = 1;
 		for(int i=0; i<len; i++)
@@ -60,7 +71,6 @@ int main(void)
 		}
 		else
 			cout<<"no"<<"\n";
-
 	}
 	return 0;
 }
