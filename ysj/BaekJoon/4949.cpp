@@ -25,6 +25,23 @@ int main(void)
 					break;
 		}
 */
+	    while(1)
+		{
+		  char buf2[101]={0,};
+		  fgets(buf2,101,stdin);
+		  int len = strlen(buf2);
+		  if(buf2[0] == '.')
+			return 0;
+
+		  buf2[len-1]='\0'; 
+		  if(buf2[len-2] == '.')
+		  {
+			strncat(buf,buf2,len);
+			break;
+		  } 
+	      else
+			strcat(buf,buf2);
+		}
 
 		int len = strlen(buf);
 		int flag = 1;
