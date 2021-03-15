@@ -37,8 +37,9 @@ int main(void)
 	BTreeNode* right;
 
 	scanf("%d",&length);
+	getchar();
 	scanf("%c %c %c",&a,&b,&c);
-
+	getchar();
 	rt = MakeBTreeNode();
 	SetData(rt,a);
 	if(b != '.')
@@ -56,9 +57,11 @@ int main(void)
 	for(i=0; i<length-1; i++)
 	{
 		scanf("%c %c %c",&a,&b,&c);
+		getchar();
+//		printf("%c %c %c\n", a,b,c);
 		node = GetParent(rt,a);
-		printf("%c\n",GetData(node));
-    	if(b != '.')
+//		printf("%c\n",GetData(node));
+		if(b != '.')
     	{
         	left = MakeBTreeNode();
         	SetData(left,b);
@@ -166,18 +169,46 @@ void PostorderTraverse(BTreeNode *bt, VisitFuncPtr action)
 
 void ShowData(BTData data)
 {
-	printf("%c\n", data);
+	printf("%c", data);
 }
 
+
+BTreeNode *GetParent(BTreeNode* bt, BTData data)
+{
+    if(bt != NULL)
+    {
+        if(bt->data == data)
+            return bt;
+        else
+        {
+            BTreeNode *btt = GetParent(bt->left, data);
+            if(btt != NULL)
+                return btt;
+            return GetParent(bt->right, data);
+        }
+    }
+    return NULL;
+}
+/*
 BTreeNode *GetParent(BTreeNode* nd, BTData data)
 {
-	if(nd == NULL)
+	BTreeNode *temp = nd;
+	if(temp == NULL)
 		return NULL;
-	if(nd->data == data)
-		return nd;
 
-	if(nd->left != NULL)
-		GetParent(nd->left,data);
-	if(nd->right != NULL)
-		GetParent(nd->right, data);
+	if(temp->data == data)
+		return temp;
+
+	temp = GetParent(temp->left, data);
+	if(temp != NULL)
+		return temp;
+	else
+		temp = nd;
+
+	temp = GetParent(temp->right, data);
+	if(temp != NULL)
+		return temp;
 }
+*/
+
+
