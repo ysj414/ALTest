@@ -9,7 +9,7 @@ int main(void)
 	int gugu[10][10];
 	int len1,len2;
 	int i,j;
-	int sum=0;
+	long long sum=0;
 
 	scanf("%s %s",A,B);
 	
@@ -27,7 +27,7 @@ int main(void)
 			sum+=gugu[A[i]-48][B[j]-48];
 		}
 	}
-	printf("%d\n",sum);
+	printf("%lld\n",sum);
 
 	return 0;
 }
